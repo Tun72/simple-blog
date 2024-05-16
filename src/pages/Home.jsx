@@ -1,9 +1,13 @@
+import Header from "../ui/Header";
+import HeroSection from "../ui/HeroSection";
+
 function Home() {
-    return (
-        <div>
-            
-        </div>
-    )
+  return (
+    <section>
+      <Header />
+      <HeroSection />
+    </section>
+  );
 }
 
-export default Home
+export default Home;
