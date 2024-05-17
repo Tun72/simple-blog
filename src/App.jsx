@@ -5,9 +5,10 @@ import Home from "./pages/Home";
 import Posts, { loader as PostsLoader } from "./pages/Posts";
 import Create from "./pages/Create";
 import Auth from "./pages/Auth";
-import Details from "./pages/Details";
+import Details, { loader as DetailLoader } from "./pages/Details";
 import Edit from "./pages/Edit";
 import NotFount from "./ui/NotFount";
+import { action as CreateAction } from "./ui/BlogForm";
 
 const router = createBrowserRouter([
   {
@@ -21,28 +22,37 @@ const router = createBrowserRouter([
       {
         path: "/posts",
         element: <Posts />,
-        loader: PostsLoader
+        loader: PostsLoader,
       },
       {
         path: "/post/create",
         element: <Create />,
+        action: CreateAction,
       },
       {
         path: "/auth",
         element: <Auth />,
       },
       {
-        path: ":id",
+        path: "/:id",
         id: "post-detail",
+        loader: DetailLoader,
         children: [
           {
             index: true,
+            path: "detail",
             element: <Details />,
+            loader: DetailLoader,
           },
           {
             path: "edit",
             element: <Edit />,
+            action: CreateAction,
           },
+          {
+            path: "delete",
+            
+          }
         ],
       },
     ],
