@@ -2,6 +2,7 @@ import axios from "axios";
 import BlogDetail from "../components/BlogDetail";
 import { URL } from "../util/helper";
 import { redirect, useLoaderData } from "react-router-dom";
+import { getToken } from "../util/auth";
 
 function Details() {
   const blog = useLoaderData();
@@ -36,7 +37,7 @@ export async function action({ request, params }) {
 
   const response = await axios.delete(`${URL}/posts/${params.id}`, {
     headers: {
-      Authorization: "Bearer ",
+      Authorization: "Bearer " + getToken(),
     },
   });
 

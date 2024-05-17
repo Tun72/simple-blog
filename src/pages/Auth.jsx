@@ -1,5 +1,8 @@
+import axios from "axios";
 import AuthForm from "../ui/AuthForm";
 import AuthLayout from "../ui/AuthLayout";
+import { redirect } from "react-router-dom";
+import { URL as BlogUrl } from "../util/helper";
 
 function Auth() {
   return (
@@ -8,5 +11,50 @@ function Auth() {
     </AuthLayout>
   );
 }
+
+export const action = async ({ request }) => {
+  const searchParams = new URL(request.url).searchParams;
+
+  const mode = searchParams.get("mode") || "login";
+
+  if (mode !== "login" && mode !== "signup")
+    throw new Error("Authentication failed 💥");
+
+  const formData = await request.formData();
+
+  const authData = {
+    email: formData.get("email"),
+    password: formData.get("password"),
+  };
+
+  console.log(BlogUrl + "/" + mode);
+
+  const response = await axios.post(
+    BlogUrl + "/" + mode,
+    { ...authData },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  console.log(response);
+
+  if (response.status === 422 || response.status === 401) return response;
+
+  if (!response.status === 200) throw new Error("Authentication failed 💥");
+
+  const data = await response.data;
+
+  const token = data.token;
+
+  localStorage.setItem("token", token);
+  const expDate = new Date();
+  expDate.setHours(expDate.getHours() + 1);
+  localStorage.setItem("exp", expDate.toISOString());
+
+  return redirect("/");
+};
 
 export default Auth;

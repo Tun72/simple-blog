@@ -1,4 +1,3 @@
-import { data } from "autoprefixer";
 import { Link } from "react-router-dom";
 
 function BlogList({ blog }) {
@@ -20,7 +19,7 @@ function BlogList({ blog }) {
         <h2 className="mt-3 text-3xl mb-6 font-display text-black leading-tight max-w-sm">
           {title}
         </h2>
-        <p className="mt-4 max-w-md">{description.slice(0,200)}</p>
+        <p className="mt-4 max-w-md">{description.slice(0, 200)}</p>
         <Link
           to={`/${id}/detail`}
           className="flex items-center mt-6 uppercase text-sm text-black font-semibold"

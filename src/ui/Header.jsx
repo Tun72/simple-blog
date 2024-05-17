@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Nav from "./Nav";
-import { Link } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+
 
 function Header() {
   const [openNav, setOpenNav] = useState(false);
@@ -8,6 +9,8 @@ function Header() {
   function handelNav() {
     setOpenNav((prev) => !prev);
   }
+
+  
   return (
     <>
       <header className="h-24 z-50 relative container mx-auto px-[2rem] flex items-center justify-between">

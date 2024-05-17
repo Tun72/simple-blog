@@ -1,13 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Form, Link, useSearchParams } from "react-router-dom";
 
 export default function AuthForm() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isLogin = searchParams.get("mode") === "login";
   return (
-    <form className="space-y-4 md:space-y-6" action="#">
+    <Form className="space-y-4 md:space-y-6" method="POST">
+      <h2 className="text-xl font-bold leading-tight tracking-tight text-purple-500 md:text-2xl ">
+        {isLogin ? "Sign in to your account" : "Sign up new account"}
+      </h2>
+
       <div>
         <label
           for="email"
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="block mb-2 text-sm font-medium text-purple-900"
         >
           Your email
         </label>
@@ -15,7 +21,7 @@ export default function AuthForm() {
           type="email"
           name="email"
           id="email"
-          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+          className="bg-purple-50 border border-purple-300 text-purple-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
           placeholder="name@company.com"
           required=""
         />
@@ -23,7 +29,7 @@ export default function AuthForm() {
       <div>
         <label
           for="password"
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="block mb-2 text-sm font-medium text-purple-900"
         >
           Password
         </label>
@@ -32,49 +38,38 @@ export default function AuthForm() {
           name="password"
           id="password"
           placeholder="••••••••"
-          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+          className="bg-purple-50 border border-purple-300 text-purple-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
           required=""
         />
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-start">
-          <div className="flex items-center h-5">
-            <input
-              id="remember"
-              aria-describedby="remember"
-              type="checkbox"
-              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
-              required=""
-            />
-          </div>
-          <div className="ml-3 text-sm">
-            <label for="remember" className="text-gray-500 ">
-              Remember me
-            </label>
-          </div>
-        </div>
-        <Link
-          to="#"
-          className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-        >
-          Forgot password?
-        </Link>
-      </div>
       <button
         type="submit"
-        className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+        className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
       >
-        Sign in
+        {isLogin ? "Login" : "Register"}
       </button>
-      <p className="text-sm font-light text-gray-500 ">
-        Don’t have an account yet?{" "}
-        <Link
-          to="#"
-          className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-        >
-          Sign up
-        </Link>
-      </p>
-    </form>
+
+      {isLogin ? (
+        <p className="text-sm font-light text-gray-500  ">
+          Don’t have an account yet?
+          <Link
+            to="/auth?mode=signup"
+            className="font-medium text-purple-600 hover:underline"
+          >
+            Sign up
+          </Link>
+        </p>
+      ) : (
+        <p className="text-sm font-light text-gray-500 ">
+          Already have an account yet?
+          <Link
+            to="/auth?mode=login"
+            className="font-medium text-purple-600 hover:underline"
+          >
+            Sign In
+          </Link>
+        </p>
+      )}
+    </Form>
   );
 }

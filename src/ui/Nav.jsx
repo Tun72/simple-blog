@@ -1,6 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink,} from "react-router-dom";
+import { getToken } from "../util/auth";
 
 function Nav({ handelNav }) {
+  const token = getToken();
+
   return (
     <nav className="fixed inset-0 w-full h-full bg-white z-50 text-yellow-900">
       <div className="container h-full mx-auto px-6 py-8 relative z-10 flex flex-col items-center justify-center text-2xl uppercase font-bold tracking-widest space-y-6">
@@ -28,13 +31,6 @@ function Nav({ handelNav }) {
           Home
         </NavLink>
         <NavLink
-          to="/about-us"
-          onClick={handelNav}
-          className="inline-block border-b-4 border-transparent hover:border-yellow-900"
-        >
-          About
-        </NavLink>
-        <NavLink
           to="/posts"
           onClick={handelNav}
           className="inline-block border-b-4 border-transparent hover:border-yellow-900"
@@ -42,21 +38,15 @@ function Nav({ handelNav }) {
           Blog
         </NavLink>
 
-        <NavLink
-          to="/post/create"
-          onClick={handelNav}
-          className="inline-block border-b-4 border-transparent hover:border-yellow-900"
-        >
-          New Blog
-        </NavLink>
-
-        <NavLink
-          href="/post/create"
-          onClick={handelNav}
-          className="inline-block border-b-4 border-transparent hover:border-yellow-900"
-        >
-          Contact
-        </NavLink>
+        {token && (
+          <NavLink
+            to="/post/create"
+            onClick={handelNav}
+            className="inline-block border-b-4 border-transparent hover:border-yellow-900"
+          >
+            New Blog
+          </NavLink>
+        )}
       </div>
       <div className="absolute inset-0 w-full h-full bg-yellow-900 bg-opacity-20"></div>
     </nav>

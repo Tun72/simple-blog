@@ -2,6 +2,7 @@ import axios from "axios";
 import { Form, redirect, useActionData } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { URL } from "../util/helper";
+import { getToken } from "../util/auth";
 function BlogForm({ post }) {
   const data = useActionData();
 
@@ -86,7 +87,6 @@ function BlogForm({ post }) {
 }
 
 export async function action({ request, params }) {
-
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   const method = request.method;
@@ -104,7 +104,7 @@ export async function action({ request, params }) {
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer ",
+        Authorization: "Bearer " + getToken(),
       },
     }
   );
@@ -113,7 +113,8 @@ export async function action({ request, params }) {
 
   console.log(response);
 
-  if (response.status !== 201 && response.status !== 200) throw new Error("Something went wrong 💥");
+  if (response.status !== 201 && response.status !== 200)
+    throw new Error("Something went wrong 💥");
 
   return redirect("/posts");
 }
