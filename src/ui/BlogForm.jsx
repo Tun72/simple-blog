@@ -86,7 +86,7 @@ function BlogForm({ post }) {
 }
 
 export async function action({ request, params }) {
-  console.log("hit");
+
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   const method = request.method;

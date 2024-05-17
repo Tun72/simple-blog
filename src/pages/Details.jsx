@@ -1,7 +1,7 @@
 import axios from "axios";
 import BlogDetail from "../components/BlogDetail";
 import { URL } from "../util/helper";
-import { useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData } from "react-router-dom";
 
 function Details() {
   const blog = useLoaderData();
@@ -27,6 +27,24 @@ export async function loader({ _, params }) {
 
   console.log(data.post);
   return data.post;
+}
+
+export async function action({ request, params }) {
+  const method = request.method;
+
+  if (method !== "DELETE") return;
+
+  const response = await axios.delete(`${URL}/posts/${params.id}`, {
+    headers: {
+      Authorization: "Bearer ",
+    },
+  });
+
+  if (response.status !== 200) {
+    throw new Error("");
+  }
+
+  return redirect("/");
 }
 
 export default Details;

@@ -1,9 +1,12 @@
+import AuthForm from "../ui/AuthForm";
+import AuthLayout from "../ui/AuthLayout";
+
 function Auth() {
-    return (
-        <div>
-            
-        </div>
-    )
+  return (
+    <AuthLayout>
+      <AuthForm />
+    </AuthLayout>
+  );
 }
 
-export default Auth
+export default Auth;

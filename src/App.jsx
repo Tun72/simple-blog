@@ -5,7 +5,10 @@ import Home from "./pages/Home";
 import Posts, { loader as PostsLoader } from "./pages/Posts";
 import Create from "./pages/Create";
 import Auth from "./pages/Auth";
-import Details, { loader as DetailLoader } from "./pages/Details";
+import Details, {
+  loader as DetailLoader,
+  action as DeleteAction,
+} from "./pages/Details";
 import Edit from "./pages/Edit";
 import NotFount from "./ui/NotFount";
 import { action as CreateAction } from "./ui/BlogForm";
@@ -30,10 +33,6 @@ const router = createBrowserRouter([
         action: CreateAction,
       },
       {
-        path: "/auth",
-        element: <Auth />,
-      },
-      {
         path: "/:id",
         id: "post-detail",
         loader: DetailLoader,
@@ -43,19 +42,20 @@ const router = createBrowserRouter([
             path: "detail",
             element: <Details />,
             loader: DetailLoader,
+            action: DeleteAction,
           },
           {
             path: "edit",
             element: <Edit />,
             action: CreateAction,
           },
-          {
-            path: "delete",
-            
-          }
         ],
       },
     ],
+  },
+  {
+    path: "/auth",
+    element: <Auth />,
   },
   {
     path: "*",
