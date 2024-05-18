@@ -8,7 +8,7 @@ function Details() {
   const blog = useLoaderData();
   return (
     <>
-      <div class="relative h-96">
+      <div className="relative h-96">
         <img
           src={blog.image}
           className="w-full h-full object-cover"
@@ -26,7 +26,6 @@ export async function loader({ _, params }) {
   if (request.status !== 200) throw new Error("Something Went Wrong 💥");
   const data = await request.data;
 
-  console.log(data.post);
   return data.post;
 }
 

@@ -5,7 +5,7 @@ function BlogList({ blog }) {
 
   return (
     <div>
-      <Link to="/blog/this-is-latest-post/">
+      <Link to={`/${id}/detail`}>
         <img
           src={image}
           className="w-full h-52 md:h-64 lg:h-96 xl:h-64 object-cover"
@@ -33,9 +33,9 @@ function BlogList({ blog }) {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1"
               d="M9 5l7 7-7 7"
             ></path>
           </svg>

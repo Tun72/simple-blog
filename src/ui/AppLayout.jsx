@@ -23,7 +23,8 @@ function AppLayout() {
     if (token === "TOKEN EXP") {
       submit(null, { action: "/logout", method: "POST" });
     }
-    console.log(token);
+
+    window.scrollTo(0, 0);
   }, [token, submit]);
 
   return (

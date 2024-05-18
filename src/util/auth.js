@@ -1,10 +1,12 @@
 import { redirect } from "react-router-dom";
 
 export function tokenLoader() {
+
   const token = localStorage.getItem("token");
   if (!token) return null;
   const duration = getExpDuration();
   if (duration < 0) return "TOKEN EXP";
+
   return token;
 }
 

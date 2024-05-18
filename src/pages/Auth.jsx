@@ -27,34 +27,32 @@ export const action = async ({ request }) => {
     password: formData.get("password"),
   };
 
-  console.log(BlogUrl + "/" + mode);
+  try {
+    const response = await axios.post(
+      BlogUrl + "/" + mode,
+      { ...authData },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  const response = await axios.post(
-    BlogUrl + "/" + mode,
-    { ...authData },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+    if (!response.status === 200) throw new Error("Authentication failed 💥");
 
-  console.log(response);
+    const data = await response.data;
 
-  if (response.status === 422 || response.status === 401) return response;
+    const token = data.token;
 
-  if (!response.status === 200) throw new Error("Authentication failed 💥");
+    localStorage.setItem("token", token);
+    const expDate = new Date();
+    expDate.setHours(expDate.getHours() + 1);
+    localStorage.setItem("exp", expDate.toISOString());
 
-  const data = await response.data;
-
-  const token = data.token;
-
-  localStorage.setItem("token", token);
-  const expDate = new Date();
-  expDate.setHours(expDate.getHours() + 1);
-  localStorage.setItem("exp", expDate.toISOString());
-
-  return redirect("/");
+    return redirect("/");
+  } catch (e) {
+    return e?.response?.data ?? e.message;
+  }
 };
 
 export default Auth;
